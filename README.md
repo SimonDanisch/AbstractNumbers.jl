@@ -6,7 +6,10 @@
 
 [![codecov.io](http://codecov.io/github/SimonDanisch/AbstractNumbers.jl/coverage.svg?branch=master)](http://codecov.io/github/SimonDanisch/AbstractNumbers.jl?branch=master)
 
-This is all that's needed to start the life of a new, wonderful Number type:
+There are a lot of functions one needs to define on a custom number type to make it work just like a julia Base number.
+Namely, around 160 functions, with quite a few methods.
+
+With AbstractNumbers, this is all you need to start the life of a new, wonderful Number type:
 
 ```Julia
 using AbstractNumbers, SpecialFunctions
@@ -21,4 +24,15 @@ AbstractNumbers.basetype(::Type{<: MyNumber}) = MyNumber
 
 ```
 
-You will have all functions defined for it :)
+Now, `MyNumber` will have all functions defined for it :)
+If you need some functions to behave diferentlyr, just overload those functions with your concrete type, than it should compose just fine.
+
+
+# Implementation
+
+Right now, the overloads of the AbstractNumber types are generated with a script that prints out the expressions as string.
+I purposefully decided against the usage of a macro for two reasons:
+
+1) I got quickly annoyed by the stack traces and not being able to immediately see what's going on - which is much easier when having all functions written out
+
+2) I need to dynamically extract some attributes from the functions before emitting methods for it. This needs some supervision and should just be done everytime Julia Base changes - so it shouldn't be part of a macro, hence I'm stuck with some kind of generator script anyways. Instead of mixing the macro approach with a generator approach, I just went full generator!
