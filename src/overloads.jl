@@ -400,7 +400,7 @@ end
 
 function Base.:frexp(arg1::AbstractNumber)
     tmp1, tmp2 = Base.:frexp(number(arg1))
-    like(arg1, tmp1), tmp
+    like(arg1, tmp1) # should return two values
 end
 
 function Base.:ldexp(arg1::AbstractNumber, arg2::AbstractNumber)
