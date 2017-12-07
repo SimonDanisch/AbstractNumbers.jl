@@ -15,10 +15,10 @@ const all_funcs = (
     :sind, :tand, :acosd, :acotd, :acscd, :asecd, :asind, :atand, :rad2deg,
     :deg2rad, :log, :log2, :log10, :log1p, :exponent, :exp, :exp2, :expm1,
     :cbrt, :sqrt, :ceil, :floor, :trunc, :round, :significand, :lgamma, :gamma,
-    :lfact, :frexp, :modf, :real, :imag, :!, :identity,
+    :lfact, :frexp, :ldexp, :modf, :real, :imag, :!, :identity,
     :zero, :one, :<<, :>>, :abs2, :sign, :atan2, :sinpi, :cospi, :exp10,
     :iseven, :ispow2, :isfinite, :isinf, :isodd, :isinteger, :isreal, :isimag,
-    :isnan, :isempty, :iszero, :transpose, :ctranspose, :copysign, :signbit,
+    :isnan, :isempty, :iszero, :transpose, :ctranspose, :copysign, :flipsign, :signbit,
     :+, :-, :*, :/, :\, :^, :(==), :(!=), :<, :(<=), :>, :(>=), :≈, :min, :max,
     :div, :fld, :rem, :mod, :mod1, :cmp, :beta, :lbeta, :&, :|, :xor,
     :clamp

@@ -403,6 +403,21 @@ function Base.:frexp(arg1::AbstractNumber)
     like(arg1, tmp)
 end
 
+function Base.:ldexp(arg1::AbstractNumber, arg2::AbstractNumber)
+    tmp = Base.:ldexp(number(arg1), number(arg2))
+    like(arg1, tmp)
+end
+
+function Base.:ldexp(a::AbstractNumber, b::Number)
+    tmp = Base.:ldexp(number(a), b)
+    like(a, tmp)
+end
+
+function Base.:ldexp(a::Number, b::AbstractNumber)
+    tmp = Base.:ldexp(a, number(b))
+    like(b, tmp)
+end
+
 function Base.:modf(arg1::AbstractNumber)
     tmp = Base.:modf(number(arg1))
     like(arg1, tmp)
@@ -610,6 +625,21 @@ end
 
 function Base.:copysign(a::Number, b::AbstractNumber)
     tmp = Base.:copysign(a, number(b))
+    like(b, tmp)
+end
+
+function Base.:flipsign(arg1::AbstractNumber, arg2::AbstractNumber)
+    tmp = Base.:flipsign(number(arg1), number(arg2))
+    like(arg1, tmp)
+end
+
+function Base.:flipsign(a::AbstractNumber, b::Number)
+    tmp = Base.:flipsign(number(a), b)
+    like(a, tmp)
+end
+
+function Base.:flipsign(a::Number, b::AbstractNumber)
+    tmp = Base.:flipsign(a, number(b))
     like(b, tmp)
 end
 
