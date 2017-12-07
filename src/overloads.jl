@@ -399,8 +399,8 @@ function Base.:lfact(arg1::AbstractNumber)
 end
 
 function Base.:frexp(arg1::AbstractNumber)
-    tmp1, tmp2 = Base.:frexp(number(arg1))
-    like(arg1, tmp1) # should return two values
+    tmp = Base.:frexp(number(arg1))
+    like(arg1, tmp)
 end
 
 function Base.:ldexp(arg1::AbstractNumber, arg2::AbstractNumber)
@@ -408,9 +408,14 @@ function Base.:ldexp(arg1::AbstractNumber, arg2::AbstractNumber)
     like(arg1, tmp)
 end
 
-function Base.:ldexp(arg1::AbstractNumber, arg2::Number)
-    tmp = Base.:ldexp(number(arg1), arg2)
-    like(arg1, tmp)
+function Base.:ldexp(a::AbstractNumber, b::Number)
+    tmp = Base.:ldexp(number(a), b)
+    like(a, tmp)
+end
+
+function Base.:ldexp(a::Number, b::AbstractNumber)
+    tmp = Base.:ldexp(a, number(b))
+    like(b, tmp)
 end
 
 function Base.:modf(arg1::AbstractNumber)
@@ -1447,5 +1452,4 @@ function SpecialFunctions.:zeta(a::Number, b::AbstractNumber)
     tmp = SpecialFunctions.:zeta(a, number(b))
     like(b, tmp)
 end
-
 
