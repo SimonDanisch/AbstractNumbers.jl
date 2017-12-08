@@ -10,7 +10,7 @@ abstract type AbstractNumber{T} <: Number end
 # convert(Number, my_type) & is the only interface one needs to overload
 @inline basetype(T::Type{<: AbstractNumber}) = error("AbstractNumbers.basetype not implemented for $T")
 @inline basetype(x::T) where T <: AbstractNumber = basetype(T)
-@inline number(x::AbstractNumber) = error("AbstractNumbers.number not implemented for $T")
+@inline number(x::AbstractNumber) = error("AbstractNumbers.number not implemented for $(typeof(x))")
 @inline function Base.convert(::Type{AN}, x::AbstractNumber{T2}) where {AN <: AbstractNumber{T}, T2} where T
     AN(T(convert(Number, x)))
 end

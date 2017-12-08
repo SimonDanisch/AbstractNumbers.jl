@@ -5,7 +5,7 @@ struct MyNumber{T} <: AbstractNumbers.AbstractNumber{T}
     number::T
 end
 
-Base.convert(::Type{Number}, x::MyNumber) = x.number
+AbstractNumbers.number(x::MyNumber) = x.number
 AbstractNumbers.basetype(::Type{<: MyNumber}) = MyNumber
 
 const all_funcs = (
