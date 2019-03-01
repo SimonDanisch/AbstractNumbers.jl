@@ -1,5 +1,5 @@
 using AbstractNumbers, SpecialFunctions
-using Base.Test
+using Test
 
 struct MyNumber{T} <: AbstractNumbers.AbstractNumber{T}
     number::T
@@ -7,24 +7,31 @@ end
 
 AbstractNumbers.number(x::MyNumber) = x.number
 AbstractNumbers.basetype(::Type{<: MyNumber}) = MyNumber
-
 const all_funcs = (
     :~, :conj, :abs, :sin, :cos, :tan, :sinh, :cosh, :tanh, :asin, :acos, :atan,
     :asinh, :acosh, :atanh, :sec, :csc, :cot, :asec, :acsc, :acot, :sech, :csch,
     :coth, :asech, :acsch, :acoth, :sinc, :cosc, :cosd, :cotd, :cscd, :secd,
     :sind, :tand, :acosd, :acotd, :acscd, :asecd, :asind, :atand, :rad2deg,
     :deg2rad, :log, :log2, :log10, :log1p, :exponent, :exp, :exp2, :expm1,
-    :cbrt, :sqrt, :ceil, :floor, :trunc, :round, :significand, :lgamma, :gamma,
-    :lfact, :frexp, :ldexp, :modf, :real, :imag, :!, :identity,
-    :zero, :one, :<<, :>>, :abs2, :sign, :atan2, :sinpi, :cospi, :exp10,
-    :iseven, :ispow2, :isfinite, :isinf, :isodd, :isinteger, :isreal, :isimag,
-    :isnan, :isempty, :iszero, :transpose, :ctranspose, :copysign, :flipsign, :signbit,
+    :cbrt, :sqrt, :ceil, :floor, :trunc, :round, :significand,
+    :frexp, :ldexp, :modf, :real, :imag, :!, :identity,
+    :zero, :one, :<<, :>>, :abs2, :sign, :sinpi, :cospi, :exp10,
+    :iseven, :ispow2, :isfinite, :isinf, :isodd, :isinteger, :isreal,
+    :isnan, :isempty, :iszero, :transpose, :copysign, :flipsign, :signbit,
     :+, :-, :*, :/, :\, :^, :(==), :(!=), :<, :(<=), :>, :(>=), :≈, :min, :max,
-    :div, :fld, :rem, :mod, :mod1, :cmp, :beta, :lbeta, :&, :|, :xor,
+    :div, :fld, :rem, :mod, :mod1, :cmp, :&, :|, :xor,
     :clamp
 )
 
+
 const special_funcs = (
+    :lgamma,
+    :gamma,
+    :lfact,
+    :airy,
+    :airyprime,
+    :beta,
+    :lbeta,
     :airyai,
     :airyaiprime,
     :airybi,
@@ -65,6 +72,7 @@ const special_funcs = (
     :hankelh2x,
     :zeta
 )
+
 nancompare(a, b) = a == b
 function nancompare(a::Number, b::Number)
     isnan(a) && isnan(b) && return true
@@ -83,8 +91,9 @@ for (mod, funcs) in ((Base, all_funcs),), f in funcs
     func = getfield(mod, f)
     @testset "testing $f" begin
         for i = 1:4
-            for T in (Float32, Float64, Complex64, Int, UInt)
+            for T in (Float32, Float64, ComplexF32, Int, UInt)
                 args = ntuple(x-> myrand(T), i)
+                func == cmp && continue
                 if T <: Complex
                     (func in (
                         cotd, cosd, cscd, secd, sind, tand, acosd, acotd, acscd,
@@ -94,7 +103,7 @@ for (mod, funcs) in ((Base, all_funcs),), f in funcs
                 end
                 if T <: AbstractFloat
                     (func in (
-                        &, |, xor,
+                        &, |, xor, cmp
                     )) && continue
                 end
                 # i have no idea what these functions are - seem to throw exceptions when not careful with input values

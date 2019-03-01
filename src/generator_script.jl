@@ -1,22 +1,29 @@
 using SpecialFunctions
-
 const all_funcs = (
     :~, :conj, :abs, :sin, :cos, :tan, :sinh, :cosh, :tanh, :asin, :acos, :atan,
     :asinh, :acosh, :atanh, :sec, :csc, :cot, :asec, :acsc, :acot, :sech, :csch,
     :coth, :asech, :acsch, :acoth, :sinc, :cosc, :cosd, :cotd, :cscd, :secd,
     :sind, :tand, :acosd, :acotd, :acscd, :asecd, :asind, :atand, :rad2deg,
     :deg2rad, :log, :log2, :log10, :log1p, :exponent, :exp, :exp2, :expm1,
-    :cbrt, :sqrt, :ceil, :floor, :trunc, :round, :significand, :lgamma, :gamma,
-    :lfact, :frexp, :ldexp, :modf, :airy, :airyprime, :real, :imag, :!, :identity,
-    :zero, :one, :<<, :>>, :abs2, :sign, :atan2, :sinpi, :cospi, :exp10,
-    :iseven, :ispow2, :isfinite, :isinf, :isodd, :isinteger, :isreal, :isimag,
-    :isnan, :isempty, :iszero, :transpose, :ctranspose, :copysign, :flipsign, :signbit,
+    :cbrt, :sqrt, :ceil, :floor, :trunc, :round, :significand,
+    :frexp, :ldexp, :modf, :real, :imag, :!, :identity,
+    :zero, :one, :<<, :>>, :abs2, :sign, :sinpi, :cospi, :exp10,
+    :iseven, :ispow2, :isfinite, :isinf, :isodd, :isinteger, :isreal,
+    :isnan, :isempty, :iszero, :transpose, :copysign, :flipsign, :signbit,
     :+, :-, :*, :/, :\, :^, :(==), :(!=), :<, :(<=), :>, :(>=), :≈, :min, :max,
-    :div, :fld, :rem, :mod, :mod1, :cmp, :beta, :lbeta, :&, :|, :xor,
+    :div, :fld, :rem, :mod, :mod1, :cmp, :&, :|, :xor,
     :clamp
 )
 
+
 const special_funcs = (
+    :lgamma,
+    :gamma,
+    :lfact,
+    :airy,
+    :airyprime,
+    :beta,
+    :lbeta,
     :airyai,
     :airyaiprime,
     :airybi,
@@ -70,7 +77,11 @@ function to_abstract(x::T) where T
     return x
 end
 
-isa_number(::Type{T}) where T = (T <: Number || T == Any)
+
+isa_number(::Type{<: Number}) = true
+isa_number(::Type{Any}) = true
+isa_number(x) = false
+
 isa_number(tv::TypeVar) = isa_number(tv.ub)
 
 open(joinpath(@__DIR__, "overloads.jl"), "w") do io
@@ -95,7 +106,7 @@ open(joinpath(@__DIR__, "overloads.jl"), "w") do io
             boolfunc = f in (
                 :(==), :(!=), :<, :(<=), :>, :(>=), :≈
             ) || startswith(string(f), "is")
-            
+
             argnames = ntuple(i-> Symbol("arg$i"), n)
             args = map(x-> :($x::AbstractNumber), argnames)
             converted = map(x-> :(number($x)), argnames)
