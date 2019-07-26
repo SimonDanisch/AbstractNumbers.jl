@@ -58,6 +58,21 @@ function Base.:atan(arg1::AbstractNumber)
     like(arg1, tmp)
 end
 
+function Base.:atan(arg1::AbstractNumber, arg2::AbstractNumber)
+    tmp = Base.:atan(number(arg1), number(arg2))
+    like(arg1, tmp)
+end
+
+function Base.:atan(a::AbstractNumber, b::Number)
+    tmp = Base.:atan(number(a), b)
+    like(a, tmp)
+end
+
+function Base.:atan(a::Number, b::AbstractNumber)
+    tmp = Base.:atan(a, number(b))
+    like(b, tmp)
+end
+
 function Base.:asinh(arg1::AbstractNumber)
     tmp = Base.:asinh(number(arg1))
     like(arg1, tmp)
@@ -203,6 +218,21 @@ function Base.:atand(arg1::AbstractNumber)
     like(arg1, tmp)
 end
 
+function Base.:atand(arg1::AbstractNumber, arg2::AbstractNumber)
+    tmp = Base.:atand(number(arg1), number(arg2))
+    like(arg1, tmp)
+end
+
+function Base.:atand(a::AbstractNumber, b::Number)
+    tmp = Base.:atand(number(a), b)
+    like(a, tmp)
+end
+
+function Base.:atand(a::Number, b::AbstractNumber)
+    tmp = Base.:atand(a, number(b))
+    like(b, tmp)
+end
+
 function Base.:rad2deg(arg1::AbstractNumber)
     tmp = Base.:rad2deg(number(arg1))
     like(arg1, tmp)
@@ -283,48 +313,8 @@ function Base.:ceil(arg1::AbstractNumber)
     like(arg1, tmp)
 end
 
-function Base.:ceil(arg1::AbstractNumber, arg2::AbstractNumber)
-    tmp = Base.:ceil(number(arg1), number(arg2))
-    like(arg1, tmp)
-end
-
-function Base.:ceil(a::AbstractNumber, b::Number)
-    tmp = Base.:ceil(number(a), b)
-    like(a, tmp)
-end
-
-function Base.:ceil(a::Number, b::AbstractNumber)
-    tmp = Base.:ceil(a, number(b))
-    like(b, tmp)
-end
-
-function Base.:ceil(arg1::AbstractNumber, arg2::AbstractNumber, arg3::AbstractNumber)
-    tmp = Base.:ceil(number(arg1), number(arg2), number(arg3))
-    like(arg1, tmp)
-end
-
 function Base.:floor(arg1::AbstractNumber)
     tmp = Base.:floor(number(arg1))
-    like(arg1, tmp)
-end
-
-function Base.:floor(arg1::AbstractNumber, arg2::AbstractNumber)
-    tmp = Base.:floor(number(arg1), number(arg2))
-    like(arg1, tmp)
-end
-
-function Base.:floor(a::AbstractNumber, b::Number)
-    tmp = Base.:floor(number(a), b)
-    like(a, tmp)
-end
-
-function Base.:floor(a::Number, b::AbstractNumber)
-    tmp = Base.:floor(a, number(b))
-    like(b, tmp)
-end
-
-function Base.:floor(arg1::AbstractNumber, arg2::AbstractNumber, arg3::AbstractNumber)
-    tmp = Base.:floor(number(arg1), number(arg2), number(arg3))
     like(arg1, tmp)
 end
 
@@ -333,68 +323,13 @@ function Base.:trunc(arg1::AbstractNumber)
     like(arg1, tmp)
 end
 
-function Base.:trunc(arg1::AbstractNumber, arg2::AbstractNumber)
-    tmp = Base.:trunc(number(arg1), number(arg2))
-    like(arg1, tmp)
-end
-
-function Base.:trunc(a::AbstractNumber, b::Number)
-    tmp = Base.:trunc(number(a), b)
-    like(a, tmp)
-end
-
-function Base.:trunc(a::Number, b::AbstractNumber)
-    tmp = Base.:trunc(a, number(b))
-    like(b, tmp)
-end
-
-function Base.:trunc(arg1::AbstractNumber, arg2::AbstractNumber, arg3::AbstractNumber)
-    tmp = Base.:trunc(number(arg1), number(arg2), number(arg3))
-    like(arg1, tmp)
-end
-
 function Base.:round(arg1::AbstractNumber)
     tmp = Base.:round(number(arg1))
     like(arg1, tmp)
 end
 
-function Base.:round(arg1::AbstractNumber, arg2::AbstractNumber)
-    tmp = Base.:round(number(arg1), number(arg2))
-    like(arg1, tmp)
-end
-
-function Base.:round(a::AbstractNumber, b::Number)
-    tmp = Base.:round(number(a), b)
-    like(a, tmp)
-end
-
-function Base.:round(a::Number, b::AbstractNumber)
-    tmp = Base.:round(a, number(b))
-    like(b, tmp)
-end
-
-function Base.:round(arg1::AbstractNumber, arg2::AbstractNumber, arg3::AbstractNumber)
-    tmp = Base.:round(number(arg1), number(arg2), number(arg3))
-    like(arg1, tmp)
-end
-
 function Base.:significand(arg1::AbstractNumber)
     tmp = Base.:significand(number(arg1))
-    like(arg1, tmp)
-end
-
-function Base.:lgamma(arg1::AbstractNumber)
-    tmp = Base.:lgamma(number(arg1))
-    like(arg1, tmp)
-end
-
-function Base.:gamma(arg1::AbstractNumber)
-    tmp = Base.:gamma(number(arg1))
-    like(arg1, tmp)
-end
-
-function Base.:lfact(arg1::AbstractNumber)
-    tmp = Base.:lfact(number(arg1))
     like(arg1, tmp)
 end
 
@@ -420,31 +355,6 @@ end
 
 function Base.:modf(arg1::AbstractNumber)
     tmp = Base.:modf(number(arg1))
-    like(arg1, tmp)
-end
-
-function Base.:airy(arg1::AbstractNumber)
-    tmp = Base.:airy(number(arg1))
-    like(arg1, tmp)
-end
-
-function Base.:airy(arg1::AbstractNumber, arg2::AbstractNumber)
-    tmp = Base.:airy(number(arg1), number(arg2))
-    like(arg1, tmp)
-end
-
-function Base.:airy(a::AbstractNumber, b::Number)
-    tmp = Base.:airy(number(a), b)
-    like(a, tmp)
-end
-
-function Base.:airy(a::Number, b::AbstractNumber)
-    tmp = Base.:airy(a, number(b))
-    like(b, tmp)
-end
-
-function Base.:airyprime(arg1::AbstractNumber)
-    tmp = Base.:airyprime(number(arg1))
     like(arg1, tmp)
 end
 
@@ -518,21 +428,6 @@ function Base.:sign(arg1::AbstractNumber)
     like(arg1, tmp)
 end
 
-function Base.:atan2(arg1::AbstractNumber, arg2::AbstractNumber)
-    tmp = Base.:atan2(number(arg1), number(arg2))
-    like(arg1, tmp)
-end
-
-function Base.:atan2(a::AbstractNumber, b::Number)
-    tmp = Base.:atan2(number(a), b)
-    like(a, tmp)
-end
-
-function Base.:atan2(a::Number, b::AbstractNumber)
-    tmp = Base.:atan2(a, number(b))
-    like(b, tmp)
-end
-
 function Base.:sinpi(arg1::AbstractNumber)
     tmp = Base.:sinpi(number(arg1))
     like(arg1, tmp)
@@ -583,11 +478,6 @@ function Base.:isreal(arg1::AbstractNumber)
     tmp
 end
 
-function Base.:isimag(arg1::AbstractNumber)
-    tmp = Base.:isimag(number(arg1))
-    tmp
-end
-
 function Base.:isnan(arg1::AbstractNumber)
     tmp = Base.:isnan(number(arg1))
     tmp
@@ -605,11 +495,6 @@ end
 
 function Base.:transpose(arg1::AbstractNumber)
     tmp = Base.:transpose(number(arg1))
-    like(arg1, tmp)
-end
-
-function Base.:ctranspose(arg1::AbstractNumber)
-    tmp = Base.:ctranspose(number(arg1))
     like(arg1, tmp)
 end
 
@@ -753,6 +638,11 @@ function Base.:^(a::Number, b::AbstractNumber)
     like(b, tmp)
 end
 
+function Base.:(==)(arg1::AbstractNumber)
+    tmp = Base.:(==)(number(arg1))
+    tmp
+end
+
 function Base.:(==)(arg1::AbstractNumber, arg2::AbstractNumber)
     tmp = Base.:(==)(number(arg1), number(arg2))
     tmp
@@ -768,18 +658,28 @@ function Base.:(==)(a::Number, b::AbstractNumber)
     tmp
 end
 
-function Base.:(!=)(arg1::AbstractNumber, arg2::AbstractNumber)
-    tmp = Base.:(!=)(number(arg1), number(arg2))
+function Base.:!=(arg1::AbstractNumber)
+    tmp = Base.:!=(number(arg1))
     tmp
 end
 
-function Base.:(!=)(a::AbstractNumber, b::Number)
-    tmp = Base.:(!=)(number(a), b)
+function Base.:!=(arg1::AbstractNumber, arg2::AbstractNumber)
+    tmp = Base.:!=(number(arg1), number(arg2))
     tmp
 end
 
-function Base.:(!=)(a::Number, b::AbstractNumber)
-    tmp = Base.:(!=)(a, number(b))
+function Base.:!=(a::AbstractNumber, b::Number)
+    tmp = Base.:!=(number(a), b)
+    tmp
+end
+
+function Base.:!=(a::Number, b::AbstractNumber)
+    tmp = Base.:!=(a, number(b))
+    tmp
+end
+
+function Base.:<(arg1::AbstractNumber)
+    tmp = Base.:<(number(arg1))
     tmp
 end
 
@@ -798,18 +698,28 @@ function Base.:<(a::Number, b::AbstractNumber)
     tmp
 end
 
-function Base.:(<=)(arg1::AbstractNumber, arg2::AbstractNumber)
-    tmp = Base.:(<=)(number(arg1), number(arg2))
+function Base.:<=(arg1::AbstractNumber)
+    tmp = Base.:<=(number(arg1))
     tmp
 end
 
-function Base.:(<=)(a::AbstractNumber, b::Number)
-    tmp = Base.:(<=)(number(a), b)
+function Base.:<=(arg1::AbstractNumber, arg2::AbstractNumber)
+    tmp = Base.:<=(number(arg1), number(arg2))
     tmp
 end
 
-function Base.:(<=)(a::Number, b::AbstractNumber)
-    tmp = Base.:(<=)(a, number(b))
+function Base.:<=(a::AbstractNumber, b::Number)
+    tmp = Base.:<=(number(a), b)
+    tmp
+end
+
+function Base.:<=(a::Number, b::AbstractNumber)
+    tmp = Base.:<=(a, number(b))
+    tmp
+end
+
+function Base.:>(arg1::AbstractNumber)
+    tmp = Base.:>(number(arg1))
     tmp
 end
 
@@ -828,18 +738,23 @@ function Base.:>(a::Number, b::AbstractNumber)
     tmp
 end
 
-function Base.:(>=)(arg1::AbstractNumber, arg2::AbstractNumber)
-    tmp = Base.:(>=)(number(arg1), number(arg2))
+function Base.:>=(arg1::AbstractNumber)
+    tmp = Base.:>=(number(arg1))
     tmp
 end
 
-function Base.:(>=)(a::AbstractNumber, b::Number)
-    tmp = Base.:(>=)(number(a), b)
+function Base.:>=(arg1::AbstractNumber, arg2::AbstractNumber)
+    tmp = Base.:>=(number(arg1), number(arg2))
     tmp
 end
 
-function Base.:(>=)(a::Number, b::AbstractNumber)
-    tmp = Base.:(>=)(a, number(b))
+function Base.:>=(a::AbstractNumber, b::Number)
+    tmp = Base.:>=(number(a), b)
+    tmp
+end
+
+function Base.:>=(a::Number, b::AbstractNumber)
+    tmp = Base.:>=(a, number(b))
     tmp
 end
 
@@ -985,36 +900,6 @@ end
 
 function Base.:cmp(a::Number, b::AbstractNumber)
     tmp = Base.:cmp(a, number(b))
-    like(b, tmp)
-end
-
-function Base.:beta(arg1::AbstractNumber, arg2::AbstractNumber)
-    tmp = Base.:beta(number(arg1), number(arg2))
-    like(arg1, tmp)
-end
-
-function Base.:beta(a::AbstractNumber, b::Number)
-    tmp = Base.:beta(number(a), b)
-    like(a, tmp)
-end
-
-function Base.:beta(a::Number, b::AbstractNumber)
-    tmp = Base.:beta(a, number(b))
-    like(b, tmp)
-end
-
-function Base.:lbeta(arg1::AbstractNumber, arg2::AbstractNumber)
-    tmp = Base.:lbeta(number(arg1), number(arg2))
-    like(arg1, tmp)
-end
-
-function Base.:lbeta(a::AbstractNumber, b::Number)
-    tmp = Base.:lbeta(number(a), b)
-    like(a, tmp)
-end
-
-function Base.:lbeta(a::Number, b::AbstractNumber)
-    tmp = Base.:lbeta(a, number(b))
     like(b, tmp)
 end
 

@@ -1,0 +1,15 @@
+name = "AbstractNumbers"
+uuid = "85c772de-338a-5e7f-b815-41e76c26ac1f"
+version = "0.0.1"
+
+[deps]
+SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

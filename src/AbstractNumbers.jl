@@ -1,4 +1,3 @@
-__precompile__()
 module AbstractNumbers
 
 using SpecialFunctions
@@ -36,6 +35,11 @@ usage:
 # that == and friends return a bool. Returning an AbstractNumber{Bool} seems a bit odd
 @inline like(::Type{AN}, x::Tuple) where AN <: AbstractNumber = like.(AN, x)
 
+@inline Base.typemax(::Type{Num}) where Num <: AbstractNumber{T} where T = like(Num, typemax(T))
+@inline Base.typemin(::Type{Num}) where Num <: AbstractNumber{T} where T = like(Num, typemin(T))
+
+@inline Base.typemax(::T) where T <: AbstractNumber = typemax(T)
+@inline Base.typemin(::T) where T <: AbstractNumber = typemax(T)
 
 @inline Base.eltype(x::AbstractNumber{T}) where T = T
 @inline Base.eltype(::Type{T}) where T <: AbstractNumber{ET} where ET = ET
