@@ -8,6 +8,10 @@ const SF = SpecialFunctions
 
 AbstractNumbers.number(x::MyNumber) = x.number
 AbstractNumbers.basetype(::Type{<: MyNumber}) = MyNumber
+
+x = MyNumber(1)
+@test convert(Number, x) === x
+
 all_funcs = (
     :~, :conj, :abs, :sin, :cos, :tan, :sinh, :cosh, :tanh, :asin, :acos, :atan,
     :asinh, :acosh, :atanh, :sec, :csc, :cot, :asec, :acsc, :acot, :sech, :csch,
