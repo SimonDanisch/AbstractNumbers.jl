@@ -10,15 +10,22 @@ abstract type AbstractNumber{T} <: Number end
 @inline basetype(T::Type{<: AbstractNumber}) = error("AbstractNumbers.basetype not implemented for $T")
 @inline basetype(x::T) where T <: AbstractNumber = basetype(T)
 @inline number(x::AbstractNumber) = error("AbstractNumbers.number not implemented for $(typeof(x))")
+
 @inline function Base.convert(::Type{AN}, x::AbstractNumber{T2}) where {AN <: AbstractNumber{T}, T2} where T
-    AN(T(convert(Number, x)))
+    AN(T(number(x)))
 end
+
 @inline function Base.convert(::Type{AN}, x::Number) where AN <: AbstractNumber
     AN(x)
 end
 @inline function Base.convert(::Type{T}, x::AbstractNumber) where T <: Number
-    T(number(x))
+    if isabstracttype(T)
+        return x
+    else
+        return convert(T, number(x))
+    end
 end
+
 
 """
     like(num::AbstractNumber, x::T)
@@ -41,8 +48,8 @@ usage:
 @inline Base.typemax(::T) where T <: AbstractNumber = typemax(T)
 @inline Base.typemin(::T) where T <: AbstractNumber = typemax(T)
 
-@inline Base.eltype(x::AbstractNumber{T}) where T = T
-@inline Base.eltype(::Type{T}) where T <: AbstractNumber{ET} where ET = ET
+@inline Base.eltype(x::T) where T <: AbstractNumber = T
+@inline Base.eltype(::Type{T}) where T <: AbstractNumber = T
 
 include("overloads.jl")
 
