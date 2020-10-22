@@ -1,9 +1,6 @@
 # AbstractNumbers
 
 [![Build Status](https://travis-ci.org/SimonDanisch/AbstractNumbers.jl.svg?branch=master)](https://travis-ci.org/SimonDanisch/AbstractNumbers.jl)
-
-[![Coverage Status](https://coveralls.io/repos/SimonDanisch/AbstractNumbers.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/SimonDanisch/AbstractNumbers.jl?branch=master)
-
 [![codecov.io](http://codecov.io/github/SimonDanisch/AbstractNumbers.jl/coverage.svg?branch=master)](http://codecov.io/github/SimonDanisch/AbstractNumbers.jl?branch=master)
 
 There are a lot of functions one needs to define on a custom number type to make it work just like a julia Base number.
