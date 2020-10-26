@@ -32,7 +32,7 @@ all_funcs = (
     :zero, :one, :<<, :>>, :abs2, :sign, :sinpi, :cospi, :exp10,
     :iseven, :ispow2, :isfinite, :isinf, :isodd, :isinteger, :isreal,
     :isnan, :isempty, :iszero, :transpose, :copysign, :flipsign, :signbit,
-    :+, :-, :*, :/, :\, :^, :(==), :(!=), :<, :(<=), :>, :(>=), :≈, :min, :max,
+    :+, :-, :*, :/, :\, :^, :(==), :(!=), :<, :(<=), :>, :(>=), :min, :max,
     :div, :fld, :rem, :mod, :mod1, :cmp, :&, :|, :xor,
     :clamp
 )
@@ -93,8 +93,8 @@ end
 myrand(::Type{T}) where T <: Unsigned = rand(T(1):T(20))
 myrand(::Type{T}) where T = rand(T)
 @testset "AbstractNumbers" begin
-
     for (mod, funcs) in ((Base, all_funcs),), f in funcs
+        println(f)
         func = getfield(mod, f)
         @testset "testing $f" begin
             for i = 1:4
@@ -107,12 +107,12 @@ myrand(::Type{T}) where T = rand(T)
                         (func in (
                             cotd, cosd, cscd, secd, sind, tand, acosd, acotd, acscd,
                             asecd, asind, atand, rem, modf, (<), (>), (<=), (>=),
-                            min, max, cmp, &, |, xor, clamp
+                            min, max, cmp, &, |, xor, clamp, div, fld
                         )) && continue
                     end
                     if T <: AbstractFloat
                         (func in (
-                            &, |, xor,
+                            &, |, xor
                         )) && continue
                     end
                     # i have no idea what these functions are - seem to throw exceptions when not careful with input values
@@ -133,6 +133,14 @@ myrand(::Type{T}) where T = rand(T)
         end
     end
 
+    # isapprox
+    for T in (Float32, Float64, ComplexF64, Int, UInt)
+        T = Float64
+        args = ntuple(x-> myrand(T), 2)
+        a = ≈(args...)
+        b = ≈(MyNumber.(args)...)
+        a == b
+    end
 
 
     @testset "bessel functions" begin
@@ -152,4 +160,7 @@ myrand(::Type{T}) where T = rand(T)
             @test_throws MethodError SF.besseljx(MyNumber(1), MyNumber(complex(big(1.0))))
         end
     end
+
 end
+
+nothing
