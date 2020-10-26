@@ -15,7 +15,7 @@ abstract type AbstractNumber{T} <: Number end
     AN(T(number(x)))
 end
 
-@inline function Base.convert(::Type{AN}, x::Number) where AN <: AbstractNumber
+@inline function Base.convert(::Type{AN}, x::Number) where AN <: AbstractNumber{T} where T
     AN(x)
 end
 @inline function Base.convert(::Type{T}, x::AbstractNumber) where T <: Number
@@ -29,6 +29,7 @@ end
 
 """
     like(num::AbstractNumber, x::T)
+
 Creates a number from `x` like the first argument. It discards the eltype of `num`
 and uses the type of `x` instead.
 usage:
@@ -54,6 +55,14 @@ usage:
 include("overloads.jl")
 
 rem(x::AbstractNumber, y::AbstractNumber, r::RoundingMode) = like(x, rem(number(x), number(y), r))
+
+
+# Overload ambiguities
+Base.:^(a::Irrational{:ℯ}, b::AbstractNumber) = like(a, Base.:^(a, number(b)))
+Base.:^(a::AbstractNumber, b::Rational) = like(a, Base.:^(number(a), b))
+Base.:^(a::AbstractNumber, b::Integer) = like(a, Base.:^(number(a), b))
+Base.log(a::Irrational{:ℯ}, b::AbstractNumber) = like(a, Base.:^(a, number(b)))
+
 
 export AbstractNumber
 
