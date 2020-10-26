@@ -1,5 +1,14 @@
 using AbstractNumbers, SpecialFunctions
-using Test
+using Test, Aqua
+
+Aqua.test_ambiguities([AbstractNumbers, Base, Core])
+Aqua.test_unbound_args(AbstractNumbers)
+Aqua.test_undefined_exports(AbstractNumbers)
+Aqua.test_project_extras(AbstractNumbers)
+Aqua.test_stale_deps(AbstractNumbers)
+Aqua.test_deps_compat(AbstractNumbers)
+Aqua.test_project_toml_formatting(AbstractNumbers)
+
 
 struct MyNumber{T} <: AbstractNumbers.AbstractNumber{T}
     number::T
