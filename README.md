@@ -21,8 +21,8 @@ AbstractNumbers.basetype(::Type{<: MyNumber}) = MyNumber
 
 ```
 
-Now, `MyNumber` will have all functions defined for it :)
-If you need some functions to behave diferently, just overload those functions with your concrete type!
+Now, `MyNumber` will have all functions defined for it. :)
+If you need some functions to behave differently, just overload those functions with your concrete type!
 
 
 # Implementation
