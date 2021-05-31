@@ -1253,6 +1253,11 @@ function SpecialFunctions.:polygamma(a::Number, b::AbstractNumber)
     like(b, tmp)
 end
 
+function SpecialFunctions.:polygamma(a::Integer, b::AbstractNumber)
+    tmp = SpecialFunctions.:polygamma(a, number(b))
+    like(b, tmp)
+end
+
 function SpecialFunctions.:trigamma(arg1::AbstractNumber)
     tmp = SpecialFunctions.:trigamma(number(arg1))
     like(arg1, tmp)
