@@ -1,7 +1,7 @@
 using AbstractNumbers, SpecialFunctions
 using Test, Aqua
 
-Aqua.test_ambiguities([AbstractNumbers, Base, Core])
+Aqua.test_ambiguities([AbstractNumbers, Base, Core]; exclude=[(==)])
 Aqua.test_unbound_args(AbstractNumbers)
 Aqua.test_undefined_exports(AbstractNumbers)
 Aqua.test_project_extras(AbstractNumbers)
