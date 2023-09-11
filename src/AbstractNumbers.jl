@@ -61,7 +61,7 @@ rem(x::AbstractNumber, y::AbstractNumber, r::RoundingMode) = like(x, rem(number(
 Base.:^(a::Irrational{:ℯ}, b::AbstractNumber) = like(a, Base.:^(a, number(b)))
 Base.:^(a::AbstractNumber, b::Rational) = like(a, Base.:^(number(a), b))
 Base.:^(a::AbstractNumber, b::Integer) = like(a, Base.:^(number(a), b))
-Base.log(a::Irrational{:ℯ}, b::AbstractNumber) = like(a, Base.:^(a, number(b)))
+Base.log(a::Irrational{:ℯ}, b::AbstractNumber) = like(a, Base.log(a, number(b)))
 
 
 export AbstractNumber
