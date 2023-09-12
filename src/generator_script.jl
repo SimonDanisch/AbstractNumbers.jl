@@ -70,11 +70,14 @@ function to_abstract(x::T) where T
     return x
 end
 
-function isa_number(T::DataType)
+function isa_number(T::Type)
     return T <: Number || T == Any
 end
 function isa_number(tv::TypeVar)
     isa_number(tv.ub)
+end
+function isa_number(tv)
+    false
 end
 
 open(joinpath(@__DIR__, "overloads.jl"), "w") do io
@@ -102,12 +105,17 @@ open(joinpath(@__DIR__, "overloads.jl"), "w") do io
             ) || startswith(string(f), "is")
 
             argnames = ntuple(i-> Symbol("arg$i"), n)
-            args = map(x-> :($x::AbstractNumber), argnames)
+            number_args = map(x-> :($x::AbstractNumber), argnames)
+            real_args = map(x-> :($x::AbstractReal), argnames)
             converted = map(x-> :(number($x)), argnames)
             fname = "$mod.$(sprint(show, f))"
             ret = boolfunc ? "tmp" : "like(arg1, tmp)"
             println(io, """
-            function $fname($(join(args, ", ")))
+            function $fname($(join(number_args, ", ")))
+                tmp = $fname($(join(converted, ", ")))
+                $ret
+            end
+            function $fname($(join(real_args, ", ")))
                 tmp = $fname($(join(converted, ", ")))
                 $ret
             end
@@ -121,10 +129,18 @@ open(joinpath(@__DIR__, "overloads.jl"), "w") do io
                     tmp = $fname(number(a), b)
                     $ret
                 end
+                function $fname(a::AbstractReal, b::Real)
+                    tmp = $fname(number(a), b)
+                    $ret
+                end
                 """)
                 ret = boolfunc ? "tmp" : "like(b, tmp)"
                 println(io, """
                 function $fname(a::Number, b::AbstractNumber)
+                    tmp = $fname(a, number(b))
+                    $ret
+                end
+                function $fname(a::Real, b::AbstractReal)
                     tmp = $fname(a, number(b))
                     $ret
                 end
