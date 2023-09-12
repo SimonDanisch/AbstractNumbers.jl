@@ -18,12 +18,12 @@ const SF = SpecialFunctions
 AbstractNumbers.number(x::MyNumber) = x.number
 AbstractNumbers.basetype(::Type{<: MyNumber}) = MyNumber
 
-struct MyReal{T} <: AbstractNumbers.AbstractReal{T}
-    number::T
+struct MyReal{T<:Real} <: AbstractNumbers.AbstractReal{T}
+    real::T
 end
 const SF = SpecialFunctions
 
-AbstractNumbers.number(x::MyReal) = x.number
+AbstractNumbers.number(x::MyReal) = x.real
 AbstractNumbers.basetype(::Type{<: MyReal}) = MyReal
 
 x = MyNumber(1)
@@ -174,8 +174,6 @@ myrand(::Type{T}) where T = rand(T)
             @test o(MyNumber(2.0 + im)) ≈ f(MyNumber(1), MyNumber(2.0 + im))
             @test z(MyReal(2)) ≈ z(MyReal(2.0))
             @test o(MyReal(2)) ≈ o(MyReal(2.0))
-            @test z(MyReal(2.0 + im)) ≈ f(MyReal(0), MyReal(2.0 + im))
-            @test o(MyReal(2.0 + im)) ≈ f(MyReal(1), MyReal(2.0 + im))
         end
         @testset "besselj error throwing" begin
             @test_throws MethodError SF.besselj(MyNumber(1.2), MyNumber(big(1.0)))
@@ -183,9 +181,7 @@ myrand(::Type{T}) where T = rand(T)
             @test_throws MethodError SF.besseljx(MyNumber(1), MyNumber(big(1.0)))
             @test_throws MethodError SF.besseljx(MyNumber(1), MyNumber(complex(big(1.0))))
             @test_throws MethodError SF.besselj(MyReal(1.2), MyReal(big(1.0)))
-            @test_throws MethodError SF.besselj(MyReal(1), MyReal(complex(big(1.0))))
             @test_throws MethodError SF.besseljx(MyReal(1), MyReal(big(1.0)))
-            @test_throws MethodError SF.besseljx(MyReal(1), MyReal(complex(big(1.0))))
         end
     end
 

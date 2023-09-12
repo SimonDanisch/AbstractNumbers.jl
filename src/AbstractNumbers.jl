@@ -28,8 +28,6 @@ end
         return convert(T, number(x))
     end
 end
-
-
 """
     like(num::Union{AbstractNumber,AbstractReal}, x::T)
 
@@ -62,10 +60,41 @@ rem(x::AbstractReal, y::AbstractReal, r::RoundingMode) = like(x, rem(number(x), 
 
 
 # Overload ambiguities
-Base.:^(a::Irrational{:ℯ}, b::AbstractNumber) = like(a, Base.:^(a, number(b)))
-Base.:^(a::AbstractNumber, b::Rational) = like(a, Base.:^(number(a), b))
-Base.:^(a::AbstractNumber, b::Integer) = like(a, Base.:^(number(a), b))
-Base.log(a::Irrational{:ℯ}, b::AbstractNumber) = like(a, Base.:^(a, number(b)))
+
+for (M, f, A, B) in [
+    (Base, :^, Irrational{:ℯ}, AbstractNumber),
+    (Base, :^, Irrational{:ℯ}, AbstractReal),
+    (Base, :log, Irrational{:ℯ}, AbstractNumber),
+    (Base, :log, Irrational{:ℯ}, AbstractReal),
+    (Base, :flipsign, Signed, AbstractReal),
+    (Base, :flipsign, Float32, AbstractReal),
+    (Base, :flipsign, Float64, AbstractReal),
+    (Base, :copysign, Float32, AbstractReal),
+    (Base, :copysign, Float64, AbstractReal),
+    (Base, :copysign, Rational, AbstractReal),
+    (Base, :copysign, Signed, AbstractReal),
+    (SpecialFunctions, :polygamma, Integer, AbstractNumber),
+    (SpecialFunctions, :polygamma, Integer, AbstractReal),
+]
+    @eval $M.$f(a::$A, b::$B) = like(a, $f(a, number(b)))
+end
+
+for (M, f, A, B) in [
+    (SpecialFunctions, :besselkx, AbstractReal, AbstractFloat),
+    (SpecialFunctions, :besselyx, AbstractReal, AbstractFloat),
+    (SpecialFunctions, :besselj, AbstractReal, AbstractFloat),
+    (SpecialFunctions, :besselk, AbstractReal, AbstractFloat),
+    (SpecialFunctions, :besseli, AbstractReal, AbstractFloat),
+    (SpecialFunctions, :bessely, AbstractReal, AbstractFloat),
+    (SpecialFunctions, :besselix, AbstractReal, AbstractFloat),
+    (SpecialFunctions, :besseljx, AbstractReal, AbstractFloat),
+    (Base, :^, AbstractNumber, Integer),
+    (Base, :^, AbstractNumber, Rational),
+    (Base, :^, AbstractReal, Rational),
+    (Base, :^, AbstractReal, Integer),
+]
+    @eval $M.$f(a::$A, b::$B) = like(a, $f(number(a), b))
+end
 
 
 export AbstractNumber, AbstractReal
