@@ -10,15 +10,13 @@ With AbstractNumbers, this is all you need to start the life of a new, wonderful
 
 ```Julia
 using AbstractNumbers, SpecialFunctions
-using Base.Test
 
 struct MyNumber{T} <: AbstractNumbers.AbstractNumber{T}
     number::T
 end
 
-Base.convert(::Type{Number}, x::MyNumber) = x.number
+AbstractNumbers.number(x::MyNumber) = x.number
 AbstractNumbers.basetype(::Type{<: MyNumber}) = MyNumber
-
 ```
 
 Now, `MyNumber` will have all functions defined for it. :)
